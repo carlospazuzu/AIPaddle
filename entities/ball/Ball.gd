@@ -7,6 +7,8 @@ var direction = Vector2(-1, -1) # initially, moves left and up
 var screen_width
 var screen_height
 
+var movement
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_width = get_viewport_rect().size.x
@@ -15,7 +17,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var movement = direction * SPEED * delta
+	movement = direction * SPEED * delta
 	
 	var collision = move_and_collide(movement)
 	
@@ -25,6 +27,8 @@ func _process(delta):
 			collision.collider.free()
 		if collision.normal.x != 0:
 			direction.x = collision.normal.x
+		else:
+			direction.x = [1, -1][randi() % 2]
 		if collision.normal.y != 0:
 			direction.y = collision.normal.y
 		
